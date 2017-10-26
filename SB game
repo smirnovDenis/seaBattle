@@ -1,0 +1,120 @@
+#include<iostream>
+#include<Windows.h>
+using namespace std;
+
+void showBattleField(int **arr, int size);
+void upperScale(int n);
+int **initArray(int n);
+int **oneDeckPosition(int **arr, int size, int pos1, int pos2, int quantity);
+
+void main()
+{
+	const int n = 10;
+	
+	int **arr = initArray(n);
+
+	showBattleField(arr, n);
+		
+	int ind_i, ind_j, quantity;
+	cout << "\nSelect start point FROM 1 to 10\n";
+	do{
+		cout << "Left scale: "; cin >> ind_i;
+		cout << "Uper scale: "; cin >> ind_j;
+
+		if ((ind_i) > 10 || (ind_i) < 0 || (ind_j) > 10 || (ind_j) < 0)
+		cout << "Error! Input correct position" << endl;
+
+	} while ((ind_i) > 10 || (ind_i) < 0 || (ind_j) > 10 || (ind_j) < 0);
+	cout << "Input deck quantity "; cin >> quantity;
+
+	oneDeckPosition(arr, n, ind_i, ind_j, quantity);
+	system("cls");
+	showBattleField(arr, n);
+
+	cout << endl << endl;
+	system("pause");
+}
+int **initArray(int n)
+{
+	int **arr = (int**)calloc(n,sizeof(int*));
+	for (int i = 0; i < n; i++)
+	{
+		arr[i] = (int*)calloc(n,sizeof(int));
+	}
+	return arr;
+}
+void showBattleField(int **arr, int n)
+{
+	cout << " "; upperScale(n); cout << endl;
+	for (int i = 0; i < n; i++)
+	{
+		cout << char(65 + i) << " ";
+		for (int j = 0; j < n; j++)
+		{			
+			cout << arr[i][j] << " ";
+		}
+		cout << endl;
+	}
+}
+void upperScale(int n)
+{
+	for (int i = 0; i < n; i++)
+	{
+		cout << " " << (i + 1);
+	}
+}
+int **oneDeckPosition(int **arr, int size, int pos1, int pos2, int quantity)
+{
+	for (int i = 0; i <size; i++)
+	{
+		for (int j = 0; j < size; j++)
+		{		
+			if (quantity == 1 && arr[pos1 - 1][pos2 - 1] == 0)
+			{
+				arr[pos1 - 1][pos2 - 1] = quantity;
+
+				if ((pos1 - 1) == 0 && ((pos2 - 1) == 0))
+				{
+					arr[pos1][pos2 - 1] = 7;
+					arr[pos1 - 1][pos2] = 7;
+				}
+				if (((pos1 - 1) == 0 && (pos2 - 1) == 9))
+				{
+					arr[pos1 - 1][pos2 - 2] = 7;
+					arr[pos1][pos2 - 1] = 7;
+				}
+				if ((pos1 - 1) == 9 && (pos2 - 1) == 0)
+				{
+					arr[pos1 - 2][pos2 - 1] = 7;
+					arr[pos1 - 1][pos2] = 7;
+				}
+				if ((pos1 - 1) == 9 && (pos2 - 1) == 9)
+				{
+					arr[pos1 - 1][pos2 - 2] = 7;
+					arr[pos1 - 2][pos2 - 2] = 7;
+				}
+				if ((pos1 - 1) > 0 && (pos1 - 1) < 9 && (pos2 - 1) > 0 && (pos2 - 1))
+				{
+					arr[pos1][pos2 - 1] = 7;
+					arr[pos1 - 2][pos2 - 1] = 7;
+					arr[pos1 - 1][pos2] = 7;
+					arr[pos1 - 1][pos2 - 2] = 7;
+				}
+				if ((pos1 - 1) == 0 && (pos2 - 1) > 0 && (pos2 - 1) < 9)
+				{
+					arr[pos1][pos2-1] = 7;
+					arr[pos1 - 1][pos2 - 2] = 7;
+					arr[pos1 - 1][pos2] = 7;
+				}
+				if ((pos1 - 1) == 9 && (pos2 - 1) > 0 && (pos2 - 1) < 9)
+				{
+					arr[pos1-2][pos2 - 1] = 7;
+					arr[pos1 - 1][pos2 - 2] = 7;
+					arr[pos1 - 1][pos2] = 7;
+				}
+			}
+			
+		}
+	}	
+	return arr;
+}
